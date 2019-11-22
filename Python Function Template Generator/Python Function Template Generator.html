@@ -1,0 +1,67 @@
+<!DOCTYPE html >
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Just a test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="col-lg-4 col-lg-offset-4">
+<h2> Here is where you can populate your own CS115 template </h2>
+<label for="usr">Function Name:</label>
+<form id="j1">
+ <input name="name" class="form-control" placeholder="Enter Function Name" type="text" size="40">
+</form>
+
+<label for="usr">Parameter Name:</label>
+<form id="j2">
+ <input name="name2" class="form-control" placeholder="Enter Your Parameter Name" type="text" size="40">
+</form>
+
+<button type="button" class="btn btn-primary" onclick="doit()">
+Create
+</button>
+<button type="button" onclick="copy()" class="btn btn-primary">
+Copy
+</button>
+
+</div>
+
+
+<script>
+
+
+function doit() {
+var x,y,a,b;
+
+var x=document.getElementById("j1");
+var y=x.elements["name"].value;
+
+var a=document.getElementById("j2");
+var b=a.elements["name2"].value;
+
+
+document.getElementById("okay").innerHTML=(";; (" + y + " " + b + ") Produces ..........<br>" + ";; " + y + ": ... ... -> ...<br>" + ";; Requires:<br>;;   \xa0\xa0\xa0\xa0......<br>" + ";; Examples:<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "<br>(define (" + y + " " + b + ")" + "\xa0\xa0\xa0\xa0 ...)<br>" + "<br>" + ";; Tests:<br>" + "(check-expect (" + y + " ... ...) ...)<br />" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" );
+ }
+
+function copy() {
+var copytext = (";; (" + y + " " + b + ") Produces ..........<br>" + ";; " + y + ": ... ... -> ...<br>" + ";; Requires:<br>;;   \xa0\xa0\xa0\xa0......<br>" + ";; Examples:<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "<br>(define (" + y + " " + b + ")" + "\xa0\xa0\xa0\xa0 ...)<br>" + "<br>" + ";; Tests:<br>" + "(check-expect (" + y + " ... ...) ...)<br />" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" + "(check-expect (" + y + " ... ...) ...)<br>" );
+copytext.select();
+document.execCommand("copy"); }
+
+
+</script>
+
+
+<p class="col-lg-4 col-lg-offset-4" id="okay"> </p>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Who Owes Who - By YYH</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div id="everything">
+		<div id="buttons">
+			<input type="button" value="Add Item" onclick="addRow()">
+			<input type="button" value="Del Item" onclick="delRow()">
+			<input type="button" value="Add Person" onclick="addCol()">
+			<input type="button" value="Del Person" onclick="delCol()">
+			<input type="button" value="Calculate Payment" onclick="update()">
+		</div>
+		
+		
+
+		
+		<table>
+    		<caption id="caption">Who Owes Who - by YYH   
+    			<br>
+    			<small>This tool is intended to figure out who owes who when there are many people and transactions involved</small>
+    			<br>
+    			<small>Click "Calculate Payment" after entering data</small></caption>
+
+			
+			<tbody id="table">
+			<tr id="tr0">
+				<td id="r0c0">Items</td>
+				<td><input value="Person 1" id="r0c1"></td>
+				<td><input value="Person 2" id="r0c2"></td>
+				<td><input value="Person 3" id="r0c3"></td>
+			</tr>
+				
+			<tr id="tr1">
+				<td><input value="Item 1" id="r1c0"> </td>
+				<td><input id="r1c1" type="number" onblur="update()" value=0></td>
+				<td><input id="r1c2" type="number" onblur="update()" value=0></td>
+				<td><input id="r1c3" type="number" onblur="update()" value=0></td>
+			</tr>
+			
+			
+			<tr id="tr2">
+				<td><input value="Item 2" id="r2c0"></td>
+				<td><input id="r2c1" type="number" onblur="update()" value=0></td>
+				<td><input id="r2c2" type="number" onblur="update()" value=0></td>
+				<td><input id="r2c3" type="number" onblur="update()" value=0></td>
+			</tr>
+			
+
+			</tbody>
+			
+		</table>
+		
+		<table>
+			<tbody>
+			<tr id="total_table">
+				<td id="c0">Total</td>
+				<td><input id="c1"></td>
+				<td><input id="c2"></td>
+				<td><input id="c3"></td>
+			</tr>
+			
+			<tr id="get_paid">
+				<td id="pay0">Should Pay</td>
+				<td><input id="pay1"></td>
+				<td><input id="pay2"></td>
+				<td><input id="pay3"></td>
+			</tr>
+			
+			<tr>
+				<td><input id="avg" value="Average Total: " style="border-color:#fff; background: transparent; border: 0; padding: 0; width:173px"></td>
+			</tr>
+			</tbody>
+		</table>
+
+		
+	</body>
+	
+	<script>
+		
+		// String.fromCharCode(65) A
+		
+		var i=3;
+		var person = 1;
+		var table = document.getElementById("table")// get Table Object
+		
+		var coleng = document.getElementById("col").childElementCount
+		//console.log("Column length is "+ coleng)
+		var rowleng = table.rows.length;// get current row length
+		//console.log("row length is " + rowleng)
+		
+		
+		function addRow(){
+		var coleng = document.getElementById("tr0").childElementCount
+		var rowleng = table.rows.length;
+		//create a new input element input and set attribute value
+		var newInputType = document.createElement("input");
+		newInputType.setAttribute("value", "Item " + rowleng);
+		newInputType.setAttribute("onblur", "update()")
+		console.log("coleng " + coleng, "rowleng " + rowleng, "rowleng"+i)
+		//create a new td element and append the input element to td
+		var newTdType = document.createElement("td");
+		newTdType.appendChild(newInputType)
+
+		var newTrType = document.createElement("tr");
+		newTrType.setAttribute("id", "tr" + rowleng);
+		newTrType.appendChild(newTdType)
+		
+		table.appendChild(newTrType)
+
+		for (var j = 1; j<coleng; j++){
+			
+		//create a new input element input and set attribute value
+		var new_Input_Type = document.createElement("input");
+		new_Input_Type.setAttribute("value", 0)
+		new_Input_Type.setAttribute("onblur", "update()")
+		new_Input_Type.setAttribute("id","r"+ rowleng + "c" + j)
+		//create a new td element and append the input element to td
+		var new_Td_Type = document.createElement("td");
+		
+		new_Td_Type.appendChild(new_Input_Type)
+		
+		var new_Tr_Type = document.getElementById("tr" + rowleng)
+		new_Tr_Type.appendChild(new_Td_Type)
+		
+		table.appendChild(new_Tr_Type)
+		}
+		}
+
+
+		
+		//*TODO BUGS IN DELETE ROW
+		function delRow(){
+			table.removeChild(table.lastChild);
+		}
+
+		function delCol(){
+			var rowleng = table.rows.length;
+			var coleng = document.getElementById("tr1").childElementCount;
+			console.log("rowleng" + "=" + rowleng + "<br>" + "coleng" + "=" + coleng);
+			var total_table = document.getElementById("total_table")
+			total_table.removeChild(total_table.lastChild);
+
+			get_paid.removeChild(get_paid.lastChild);
+			
+			for (var k=0; k<coleng; k++){
+				var pos = document.getElementById("tr"+k);
+				pos.removeChild(pos.lastChild);
+
+			
+			}
+		}
+
+
+
+		function addCol(){
+			var rowleng = table.rows.length;
+			var coleng = document.getElementById("tr1").childElementCount
+			
+			//create a new input element input and set attribute value
+			var newInputType1 = document.createElement("input");
+			newInputType1.setAttribute("value", "Person " + coleng)
+			
+	
+			table.rows[0].insertCell(-1).appendChild(newInputType1);			
+			
+			for (var k = 1;k < rowleng; k++){
+				//create a new input element input and set attribute value
+				var newInputType = document.createElement("input");
+				newInputType.setAttribute("id","r"+ k + "c" + coleng)
+				newInputType.setAttribute("type","number")
+				newInputType.setAttribute("value","0")
+				table.rows[k].insertCell(-1).appendChild(newInputType);
+				
+			}
+			
+			
+			var newinput = document.createElement("input");
+			newinput.setAttribute("id","c"+coleng)
+			newinput.setAttribute("type","number")
+			newinput.setAttribute("onblur", "update()")
+			document.getElementById("total_table").insertCell(-1).appendChild(newinput);
+			
+						
+			var newinput1 = document.createElement("input");
+			newinput1.setAttribute("id","pay"+coleng)
+			newinput1.setAttribute("type","number")
+			newinput1.setAttribute("onblur", "update()")
+			document.getElementById("get_paid").insertCell(-1).appendChild(newinput1);
+		}
+		
+		function total_cost(){
+			var person_count = document.getElementById("total_table").childElementCount - 1
+			var sum = 0;
+			for (var i = 1; i<person_count+1; i++){
+				var single_cost = parseFloat(document.getElementById("c"+i).value)
+				sum = sum + single_cost
+				
+			}
+			var average = parseFloat(sum / person_count).toFixed(1)
+			var average_node = document.createTextNode("Average: " + average + " Total: "+ sum )
+			document.getElementById("avg").setAttribute("value", average_node.textContent)
+			
+			for (var pa = 1; pa<person_count+1; pa++){
+				var single_pay = parseFloat(document.getElementById("c"+pa).value) - average 
+				document.getElementById("pay" + pa).setAttribute("value", single_pay)
+			}
+		}
+		
+
+		
+		function calc(){
+			var coleng = document.getElementById("tr1").childElementCount;
+			console.log(coleng)
+			var column_total = 0
+			
+			var rowleng = table.rows.length;
+			for (var c = 1; c < coleng;c++){
+				for (var r = 1; r < rowleng; r++){
+					var a1 = parseFloat(document.getElementById("r"+ r + "c" + c).value)
+					column_total += a1
+				}
+				document.getElementById("c"+c).setAttribute("value",column_total)
+				var column_total = 0
+			}
+			
+		}
+		
+		function update(){
+			calc();
+			total_cost();
+		}
+
+
+		
+	</script>
+</html>
