@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strange 2020 Countdown</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+        body{
+            background: #C9D6FF;
+            background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);
+            background: linear-gradient(to right, #E2E2E2, #C9D6FF);
+        }
+        .main{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* bring your own prefixes */
+            transform: translate(-50%, -50%);
+        }
+        .col-md-3{
+            font-size: 36;
+            width: 2000px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main">
+    <h1>This clock goes beyond the boundary for seconds after 2020/12/31 which highlights this adventurous year</h1>
+    <div class="col-md-3">
+        <div class="card bg-dark text-white">
+            <h3 class="card-title text-center">
+                <div class="d-flex flex-wrap justify-content-center mt-2">
+                    <a><span class="date"></span></a>
+                </div>
+            </h3>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    var diff = Math.abs(new Date() - new Date('2020/12/31 23:59'));
+    // var diff = Math.abs( new Date('2020/12/31 23:59')-new Date());
+    var seconds = Math.floor((diff / 1000) / 60) * 60 + 60;
+
+    function updateTime() {
+        seconds++;
+        var dateTime = '2020/12/31 23:' + seconds;
+        $(".date").html(dateTime);
+    }
+    $(document).ready(function () {
+        setInterval(updateTime, 1000);
+    });
+</script>
+
+</html>
